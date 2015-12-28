@@ -11,7 +11,7 @@ root = process.cwd();
 
 b.add(path.join(root, 'themes/doc/source/_js/main.js'));
 
-hexo.theme.watch().then(function () {
+hexo.theme.process().then(function () {
 	hexo.theme.addProcessor('source/_js/*path', function (file) {
 		inStream = b.bundle();
 		writeStream = fs.createWriteStream(path.join(root, 'themes/doc/source/js/bundle.js'));
