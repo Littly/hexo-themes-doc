@@ -22,7 +22,6 @@ hexo.extend.tag.register(
 		case 'info':
 			return '<p class="post_content_info">' + content + '</p>';
 		}
-
 	}, {
 		ends: true
 	}

@@ -534,9 +534,6 @@ h6 {
 	line-height: 1.8em;
 }
 
-
-/***************************/
-
 .post_content table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -553,10 +550,11 @@ h6 {
 	border: 1px solid #ddd;
 }
 
-
-/***************************/
-
 .post_content .prettyprint code {
 	color: inherit;
 	background: inherit;
+}
+
+.post_comment {
+	margin-top: 35px;
 }

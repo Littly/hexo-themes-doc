@@ -9,12 +9,12 @@ var b = browserify(),
 
 root = process.cwd();
 
-b.add(path.join(root, 'themes/doc/source/_js/main.js'));
+b.add(path.join(root, 'themes/' + hexo.config.theme + '/source/_js/main.js'));
 
 hexo.theme.process().then(function () {
 	hexo.theme.addProcessor('source/_js/*path', function (file) {
 		inStream = b.bundle();
-		writeStream = fs.createWriteStream(path.join(root, 'themes/doc/source/js/bundle.js'));
+		writeStream = fs.createWriteStream(path.join(root, 'themes/' + hexo.config.theme + '/source/js/bundle.js'));
 		inStream.pipe(writeStream);
 	});
 });
