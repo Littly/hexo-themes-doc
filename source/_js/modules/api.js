@@ -5,6 +5,7 @@ var Util = require('./util'),
 var Category,
 	Search,
 	Template,
+	Demo,
 	init;
 
 Template = function (temp) {
@@ -61,7 +62,7 @@ Category = (function () {
 			_post;
 		_post = document.getElementById('j_post');
 		_curr.scrollIntoView();
-		
+
 		__onScroll = function (evt) {
 			var top = _post.scrollTop,
 				i = 0,
@@ -226,9 +227,60 @@ Search = (function () {
 	}
 })();
 
+Demo = (function () {
+	var init,
+		genCode,
+		loaded,
+		showCode,
+		hideCode;
+
+	loaded = false;
+	showCode = function (target, _text) {
+		if (!Util.data(target, 'showed')) {
+			new QRCode(target, {
+				text: _text,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
+			Util.data(target, 'showed', true);
+		}
+		Util.addClass(target, 'post_content_dbtn_qrcode');
+	};
+	hideCode = function (target, _text) {
+		Util.removeClass(target, 'post_content_dbtn_qrcode');
+	};
+	init = function () {
+		document.body.addEventListener('mouseover', function (evt) {
+			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
+				if (!loaded) {
+					loaded = true;
+					Util.appendScript('/haloDoc/js/qrcode.js', function () {
+						showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+					});
+				}
+				else {
+					showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+				}
+			}
+		});
+		document.body.addEventListener('mouseout', function (evt) {
+			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
+				hideCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+			}
+		});
+	};
+	return {
+		init: init
+	}
+})();
+
 init = function () {
 	CodePrettify.init();
-	Category.init();
+	// Category.init();
+	Demo.init();
 	Search.init();
 };
 

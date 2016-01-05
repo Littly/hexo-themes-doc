@@ -17,6 +17,7 @@ var Util = require('./util'),
 var Category,
 	Search,
 	Template,
+	Demo,
 	init;
 
 Template = function (temp) {
@@ -73,7 +74,7 @@ Category = (function () {
 			_post;
 		_post = document.getElementById('j_post');
 		_curr.scrollIntoView();
-		
+
 		__onScroll = function (evt) {
 			var top = _post.scrollTop,
 				i = 0,
@@ -238,15 +239,67 @@ Search = (function () {
 	}
 })();
 
+Demo = (function () {
+	var init,
+		genCode,
+		loaded,
+		showCode,
+		hideCode;
+
+	loaded = false;
+	showCode = function (target, _text) {
+		if (!Util.data(target, 'showed')) {
+			new QRCode(target, {
+				text: _text,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
+			Util.data(target, 'showed', true);
+		}
+		Util.addClass(target, 'post_content_dbtn_qrcode');
+	};
+	hideCode = function (target, _text) {
+		Util.removeClass(target, 'post_content_dbtn_qrcode');
+	};
+	init = function () {
+		document.body.addEventListener('mouseover', function (evt) {
+			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
+				if (!loaded) {
+					loaded = true;
+					Util.appendScript('/haloDoc/js/qrcode.js', function () {
+						showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+					});
+				}
+				else {
+					showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+				}
+			}
+		});
+		document.body.addEventListener('mouseout', function (evt) {
+			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
+				hideCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+			}
+		});
+	};
+	return {
+		init: init
+	}
+})();
+
 init = function () {
 	CodePrettify.init();
-	Category.init();
+	// Category.init();
+	Demo.init();
 	Search.init();
 };
 
 module.exports = {
 	init: init
 };
+
 },{"./code_prettify.js":3,"./util":7}],3:[function(require,module,exports){
 /*代码高亮*/
 var Util = require('./util'),
@@ -260,17 +313,16 @@ _apilist = document.getElementById('j_apilist');
 _pre = document.getElementsByTagName("pre");
 
 init = function () {
-	window.addEventListener("load", function () {
-		Array.prototype.forEach.call(_pre, function (val) {
-			Util.addClass(val, "prettyprint");
-			Util.addClass(val, "linenums");
-		});
-		prettify.prettyPrint();
+	Array.prototype.forEach.call(_pre, function (val) {
+		Util.addClass(val, "prettyprint");
+		Util.addClass(val, "linenums");
 	});
+	prettify.prettyPrint();
 };
 module.exports = {
 	init: init
 };
+
 },{"./google_code_prettify":4,"./util":7}],4:[function(require,module,exports){
 ! function () {
 	var q = null;
@@ -1009,26 +1061,40 @@ module.exports = {
 			el.getAttribute('data-' + key);
 		};
 	})(),
+	hasClass: function (el, _className) {
+		return new RegExp('\\b' + _className + '\\b').test(el.className);
+	},
 	addClass: (function () {
 		/*添加类*/
-		return document.body.classaList ? function (el, _className) {
+		return 'classList' in document.body ? function (el, _className) {
 			el.classList.add(_className);
 		} : function (el, _className) {
-			new RegExp('\\b' + _className + '\\b').test(el.className) || (el.className = (el.className + ' ' + _className).replace(/ {2,}/, function () {
-				return ' ';
-			}).trim());
+			var len,
+				_t = el.className.split(' ');
+			len = _t.length;
+			while (len--) {
+				if (_t[len].trim() === '') {
+					_t.splice(len, 1);
+				}
+			}
+			_t.push(_className);
+			el.className = _t.join(' ');
 		};
 	})(),
 	removeClass: (function () {
 		/*移除类*/
-		return document.body.classaList ? function (el, _className) {
+		return 'classList' in document.body ? function (el, _className) {
 			el.classList.remove(_className);
 		} : function (el, _className) {
-			el.className = el.className.replace(new RegExp('\\b' + _className + '\\b'), function () {
-				return '';
-			}).replace(/ {2,}/, function () {
-				return ' ';
-			}).trim();
+			var len,
+				_t = el.className.split(' ');
+			len = _t.length;
+			while (len--) {
+				if (_t[len].trim() === '' || _t[len].trim() === _className) {
+					_t.splice(len, 1);
+				}
+			}
+			el.className = _t.join(' ');
 		};
 	})(),
 	appendScript: function (src, onload) {
@@ -1038,4 +1104,5 @@ module.exports = {
 		document.body.appendChild(script);
 	}
 };
+
 },{}]},{},[1]);

@@ -445,16 +445,16 @@ h6 {
 }
 
 .post_content a {
-	color: #aaa;
+	color: #4078c0;
 	margin: 0 4px;
 	line-height: 1.5;
-	-webkit-transition: color linear .1s;
-	transition: color linear .1s;
+	/*-webkit-transition: color linear .1s;
+	transition: color linear .1s;*/
 }
 
 .post_content a:hover {
 	text-decoration: underline;
-	color: #c7254e;
+	/*color: #c7254e;*/
 }
 
 .post_content p {
@@ -500,8 +500,9 @@ h6 {
 }
 
 .post_content code {
-	color: #c7254e;
-	background: #f9f2f4;
+	padding: 0 0.2em;
+	color: #000;
+	background: rgba(0,0,0,0.04);
 }
 
 .post_content_error {
@@ -550,11 +551,80 @@ h6 {
 	border: 1px solid #ddd;
 }
 
+
 .post_content .prettyprint code {
 	color: inherit;
 	background: inherit;
 }
 
+.post_content_demo{
+	padding: 12px;
+	background: rgba(0,0,0,0.04);
+}
+
+.post_content_demo a,
+.post_content_dbtn {
+	float: left;
+	height: 35px;
+	padding: 0 12px;
+	line-height: 35px;
+	box-sizing: border-box;;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	text-align: center;
+	color: #666;
+}
+
+.post_content_demo a:hover,
+.post_content_dbtn:hover{
+	text-decoration: none;
+	background: #eee;
+}
+
+.post_content_dbtn {
+	position: relative;
+	margin-left: 12px;
+	cursor: pointer;
+}
+
+.post_content_dbtn:before {
+	content: '';
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAjUlEQVQ4T52TUQrAMAhD17v12N5tw4JFQyLt+jNGs6fGbMw534ccMxt+50+/VroiCg5+iLCs24CokMUK5IDQtYBoHaEUkG2IyqwD1K0OlInYAdMth9XJHShN8UAZqLxw/d5x7LsTozf+3o7AYJiV1kRWEce8TiJCj5KI28iQX0nMhrcjdJXLv3CaRJaTDyWzOg4ZQigSAAAAAElFTkSuQmCC') no-repeat center;
+	background-size: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+}
+
+.post_content_dbtn div{
+	display: block;
+	visibility: hidden;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin-right: -165px;
+	margin-bottom: -45px;
+	background: #fff;
+	padding: 8px;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	opacity: 0;
+	cursor: auto;
+	-webkit-transform: translate(0, 10px);
+	transform: translate(0, 10px);
+	-webkit-transition: all ease .2s;
+	transition: all ease .2s;
+}
+
+.post_content_dbtn .post_content_dbtn_qrcode {
+	opacity: 1;
+	visibility: visible;
+	-webkit-transform: translate(0, 0);
+	transform: translate(0, 0);
+}
+
 .post_comment {
-	margin-top: 35px;
+	margin-top: 50px;
 }

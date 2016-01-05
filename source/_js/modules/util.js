@@ -45,26 +45,40 @@ module.exports = {
 			el.getAttribute('data-' + key);
 		};
 	})(),
+	hasClass: function (el, _className) {
+		return new RegExp('\\b' + _className + '\\b').test(el.className);
+	},
 	addClass: (function () {
 		/*添加类*/
-		return document.body.classaList ? function (el, _className) {
+		return 'classList' in document.body ? function (el, _className) {
 			el.classList.add(_className);
 		} : function (el, _className) {
-			new RegExp('\\b' + _className + '\\b').test(el.className) || (el.className = (el.className + ' ' + _className).replace(/ {2,}/, function () {
-				return ' ';
-			}).trim());
+			var len,
+				_t = el.className.split(' ');
+			len = _t.length;
+			while (len--) {
+				if (_t[len].trim() === '') {
+					_t.splice(len, 1);
+				}
+			}
+			_t.push(_className);
+			el.className = _t.join(' ');
 		};
 	})(),
 	removeClass: (function () {
 		/*移除类*/
-		return document.body.classaList ? function (el, _className) {
+		return 'classList' in document.body ? function (el, _className) {
 			el.classList.remove(_className);
 		} : function (el, _className) {
-			el.className = el.className.replace(new RegExp('\\b' + _className + '\\b'), function () {
-				return '';
-			}).replace(/ {2,}/, function () {
-				return ' ';
-			}).trim();
+			var len,
+				_t = el.className.split(' ');
+			len = _t.length;
+			while (len--) {
+				if (_t[len].trim() === '' || _t[len].trim() === _className) {
+					_t.splice(len, 1);
+				}
+			}
+			el.className = _t.join(' ');
 		};
 	})(),
 	appendScript: function (src, onload) {

@@ -8,8 +8,10 @@
 			async: true
 		});
 */
-var author;
-author = hexo.config.author;
+var author,
+	host;
+author = hexo.config.author,
+host = hexo.config.url;
 
 hexo.extend.tag.register(
 	'alert',
@@ -27,9 +29,24 @@ hexo.extend.tag.register(
 	}
 );
 
+
 hexo.extend.tag.register(
-	'codepen',
+	'demo',
 	function (args) {
-		return '<p data-height="' + (args[1] || 250) + '" data-theme-id="0" data-slug-hash="' + args[0] + '" data-default-tab="result" data-user="' + author + '" class="codepen">See the Pen <a href="http://codepen.io/pen/KVggpQ/">' + args[0] + '</a> by ' + author + ' (<a href="http://codepen.io/' + author + '">@' + author + '</a>) on <a href="http://codepen.io">CodePen</a>.</p><script async src="//assets.codepen.io/assets/embed/ei.js"></script>';
+		// {% demo /haloDoc/demo/cardSlider.html title%}
+		return [
+			'<div class="post_content_demo fix">',
+				'<a href="',
+				host + args[0],
+				'" target="_blank" >运行Demo: ',
+				args[1],
+				'</a>',
+				'<div class="post_content_dbtn" data-url="',
+					args[0],
+					'">显示二维码',
+					'<div></div>',
+				'</div>',
+			'</div>'
+		].join('');
 	}
-)
+);
