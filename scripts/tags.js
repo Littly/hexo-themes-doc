@@ -10,8 +10,7 @@
 */
 var author,
 	host;
-author = hexo.config.author,
-host = hexo.config.url;
+author = hexo.config.author;
 
 hexo.extend.tag.register(
 	'alert',
@@ -37,8 +36,8 @@ hexo.extend.tag.register(
 		return [
 			'<div class="post_content_demo fix">',
 				'<a href="',
-				host + args[0],
-				'" target="_blank" >运行Demo: ',
+				args[0],
+				'" target="_blank" >',
 				args[1],
 				'</a>',
 				'<div class="post_content_dbtn" data-url="',
