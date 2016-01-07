@@ -76,7 +76,7 @@ var IDX = (function () {
 		var c;
 		c = document.getElementById('j_canvas');
 		_width = document.documentElement.getBoundingClientRect().width;
-		_height = 500;
+		_height = 477;
 		bound = new PIXI.Rectangle(-padding, -padding, _width + 2 * padding, _height + 2 * padding);
 		bound.left = -padding;
 		bound.top = -padding;
@@ -95,7 +95,7 @@ var IDX = (function () {
 			addCircle();
 			addLine();
 		}
-		addText();
+		// addText();
 	};
 
 	animate = function () {
