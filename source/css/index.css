@@ -275,7 +275,7 @@ h6 {
 }
 
 .api_list_item.current a {
-	color: rgb(220, 220, 220);
+	color: #fff;
 }
 
 .api_list_item {
