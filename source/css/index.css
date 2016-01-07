@@ -250,13 +250,12 @@ h6 {
 }
 
 .api_list_title {
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .api_list_title a{
 	display: block;
 	padding: 8px 20px;
-	font-weight: bold;
 	color: rgb(150, 150, 150);
 }
 
@@ -281,7 +280,7 @@ h6 {
 
 .api_list_item {
 	margin: 0 20px;
-	font-size: 14px;
+	font-size: 13px;
 	text-indent: .6em;
 }
 

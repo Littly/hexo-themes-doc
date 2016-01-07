@@ -8,8 +8,11 @@
 			async: true
 		});
 */
-var author,
+var url = require('url'),
+	path = require('path'),
+	author,
 	host;
+
 author = hexo.config.author;
 
 hexo.extend.tag.register(
@@ -36,12 +39,12 @@ hexo.extend.tag.register(
 		return [
 			'<div class="post_content_demo fix">',
 				'<a href="',
-				args[0],
+				url.resolve(hexo.config.url, path.join('/haloDoc', args[0])),
 				'" target="_blank" >',
 				args[1],
 				'</a>',
 				'<div class="post_content_dbtn" data-url="',
-					args[0],
+					url.resolve(hexo.config.url, path.join('/haloDoc', args[0])),
 					'">显示二维码',
 					'<div></div>',
 				'</div>',

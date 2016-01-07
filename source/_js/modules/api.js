@@ -249,7 +249,7 @@ Demo = (function () {
 		}
 		Util.addClass(target, 'post_content_dbtn_qrcode');
 	};
-	hideCode = function (target, _text) {
+	hideCode = function (target) {
 		Util.removeClass(target, 'post_content_dbtn_qrcode');
 	};
 	init = function () {
@@ -268,7 +268,7 @@ Demo = (function () {
 		});
 		document.body.addEventListener('mouseout', function (evt) {
 			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
-				hideCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+				hideCode(evt.target.getElementsByTagName('div')[0]);
 			}
 		});
 	};
