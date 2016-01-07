@@ -39,7 +39,9 @@ hexo.extend.helper.register('sidebar', function () {
             children.push('</li>');
         });
         str.push(items[0] ? '<li class="api_list_title' + (current ? ' current' : '') + '"><a href="' + that.url_for(items[0].path) + '">' + group + '</a></li>' : '');
-        str.push((current && items[1]) ? children.join('') : '');
+        str.push((current && items[1]) ? '<div>' : '<div class="hide">');
+        str.push(children.join(''));
+        str.push('</div>');
     });
 
     current = false;
@@ -60,7 +62,9 @@ hexo.extend.helper.register('sidebar', function () {
         children.push('</li>');
     });
     str.push(items[0] ? '<li class="api_list_title' + (current ? ' current' : '') + '"><a href="' + that.url_for(items[0].path) + '">其他组件</a></li>' : '');
-    str.push((current && items[1]) ? children.join('') : '');
+    str.push((current && items[1]) ? '<div>' : '<div class="hide">');
+    str.push(children.join(''));
+    str.push('</div>');
     return str.join('');
 });
 

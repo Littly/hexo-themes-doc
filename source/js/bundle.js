@@ -217,12 +217,12 @@ Search = (function () {
 
 	_bind = function () {
 		var search = document.getElementById('j_api_search_input');
-		search.addEventListener('blur', function () {
-			setTimeout(function () {
-				Util.removeClass(_wrapper, 'j_stat_search');
-				search.value = '';
-			}, 100);
-		});
+		// search.addEventListener('blur', function () {
+		// 	setTimeout(function () {
+		// 		Util.removeClass(_wrapper, 'j_stat_search');
+		// 		search.value = '';
+		// 	}, 100);
+		// });
 		search.addEventListener('keyup', function () {
 			Util.addClass(_wrapper, 'j_stat_search');
 			_search(this.value);

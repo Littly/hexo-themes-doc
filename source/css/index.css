@@ -292,10 +292,6 @@ h6 {
 	transition: color linear .1s;
 }
 
-.api_list_item:last-child {
-	margin-bottom: 120px;
-}
-
 .api_list_search {
 	display: none;
 }
@@ -336,7 +332,9 @@ h6 {
 	display: block;
 }
 
-
+.api_list .hide {
+	display: none;
+}
 
 
 
