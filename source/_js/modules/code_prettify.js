@@ -1,18 +1,18 @@
 /*代码高亮*/
 var Util = require('./util'),
+	$ = require('./jquery'),
 	prettify = require('./google_code_prettify');
 
 var _apilist,
 	_prettify,
 	_pre,
 	init;
-_apilist = document.getElementById('j_apilist');
-_pre = document.getElementsByTagName("pre");
+_$apilist = $('#j_apilist');
+_$pre = $("pre");
 
 init = function () {
-	Array.prototype.forEach.call(_pre, function (val) {
-		Util.addClass(val, "prettyprint");
-		Util.addClass(val, "linenums");
+	_$pre.each(function (idx, el) {
+		$(el).addClass("linenums prettyprint");
 	});
 	prettify.prettyPrint();
 };

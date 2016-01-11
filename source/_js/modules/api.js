@@ -1,6 +1,7 @@
 /*API页面相关*/
 var Util = require('./util'),
-	CodePrettify = require('./code_prettify.js');
+	$ = require('./jquery'),
+	CodePrettify = require('./code_prettify');
 
 var Category,
 	Search,
@@ -35,70 +36,10 @@ Template.prototype.render = function (data) {
 	return str;
 };
 
-Category = (function () {
-	var bind,
-		init,
-		_curr,
-		_ctn,
-		_height,
-		_map,
-		_genMap,
-		_bind;
-
-	_ctn = document.getElementById('j_api_list');
-	_height = _ctn.offsetHeight;
-	_map = [];
-	_genMap = function () {
-		_curr = document.getElementById('j_curr');
-		Util.forEach(Array.prototype.slice.call(_curr.getElementsByTagName('a'), 1), function (val) {
-			_map[document.getElementById(val.href.split('#')[1]).offsetTop - 20] = val;
-			val._offsetTop = val.offsetTop;
-		});
-	};
-
-	_bind = function () {
-		var prev = 0,
-			__onScroll,
-			_post;
-		_post = document.getElementById('j_post');
-		_curr.scrollIntoView();
-
-		__onScroll = function (evt) {
-			var top = _post.scrollTop,
-				i = 0,
-				sTop = _ctn.scrollTop;
-			while (!(top in _map) && top-- && top >= 1) {}
-			if (prev in _map && prev != top) {
-				_map[prev].style.background = 'none';
-			}
-			if (top in _map) {
-				_map[top].style.background = "#666";
-				prev = top;
-				if (_map[top]._offsetTop < sTop) {
-					_ctn.scrollTop = _map[top]._offsetTop;
-				}
-				else if (_map[top]._offsetTop > sTop + _height - 30) {
-					_ctn.scrollTop = _map[top]._offsetTop + 30 - _height;
-				}
-			}
-		};
-		__onScroll();
-		_post.addEventListener('scroll', Util.saveFlow(__onScroll, 20));
-	};
-	init = function () {
-		_genMap();
-		_bind();
-	};
-
-	return {
-		init: init
-	}
-})();
-
 Search = (function () {
 	var init,
-		_wrapper,
-		_searchWrapper,
+		_$wrapper,
+		_$searchWrapper,
 		_map,
 		_genMap,
 		_render,
@@ -107,38 +48,19 @@ Search = (function () {
 		_template;
 
 	_map = [];
-	_wrapper = document.getElementById('j_api');
-	_searchWrapper = document.getElementById('j_api_list_search');
-	_template = new Template(document.getElementById('j_template').innerHTML);
-
-	//	_isModified = (function () {
-	//		var _old = [],
-	//			len = 0,
-	//			r;
-	//		return function (_new) {
-	//			if (len == _new.length) {
-	//				s = len;
-	//				while (len-- && _old[len] == _new[len]) {}
-	//				r = len == -1 ? false : true;
-	//				_old = _new;
-	//				len = _old.length;
-	//				return r;
-	//			}
-	//			_old = _new;
-	//			len = _old.length;
-	//			return true;
-	//		}
-	//	})();
+	_$wrapper = $('#j_api');
+	_$searchWrapper = $('#j_api_list_search');
+	_template = new Template($('#j_template').html());
 
 	_genMap = function () {
-		var listTitle = document.getElementById('j_api_list_normal').getElementsByClassName('api_list_item'),
+		var _$listTitle = $('#j_api_list_normal .api_list_item'),
 			tit,
-			title,
+			$title,
 			_tmp;
-		Util.forEach(listTitle, function (parent) {
-			title = parent.getElementsByTagName('a');
-			tit = title[0].innerHTML;
-			Util.forEach(title, function (child, idx) {
+		_$listTitle.each(function (idx, parent) {
+			$title = $('a', parent);
+			tit = $title[0].innerHTML;
+			$title.each(function (idx, child) {
 				_tmp = {
 					href: child.href,
 					title: child.innerHTML
@@ -172,17 +94,17 @@ Search = (function () {
 	};
 
 	_render = function (map, reg) {
-		Util.removeClass(_searchWrapper, 'api_list_search_complete');
+		_$searchWrapper.removeClass('api_list_search_complete');
 		var str = [];
 		if (!map) {
-			Util.removeClass(_wrapper, 'j_stat_search');
+			_$wrapper.removeClass('j_stat_search');
 			return;
 		}
 		if (map.length == 0) {
-			_searchWrapper.innerHTML = '<li class="api_list_search_empty">根据相关法律法规和政策, <br>部分搜索结果未予显示。</li>';
+			_$searchWrapper.html('<li class="api_list_search_empty">根据相关法律法规和政策, <br>部分搜索结果未予显示。</li>');
 			return;
 		}
-		Util.forEach(map, function (val) {
+		map.forEach(function (val) {
 			var obj = val.parent ? {
 				title: val.title.replace(reg, function (m) {
 					return '<i>' + m + '</i>';
@@ -197,22 +119,22 @@ Search = (function () {
 			};
 			str.push(_template.render(obj));
 		});
-		_searchWrapper.innerHTML = str.join('');
+		_$searchWrapper.html(str.join(''));
 		setTimeout(function () {
-			Util.addClass(_searchWrapper, 'api_list_search_complete');
+			_$searchWrapper.addClass('api_list_search_complete');
 		}, 100);
 	};
 
 	_bind = function () {
-		var search = document.getElementById('j_api_search_input');
+		var $search = $('#j_api_search_input');
 		// search.addEventListener('blur', function () {
 		// 	setTimeout(function () {
 		// 		Util.removeClass(_wrapper, 'j_stat_search');
 		// 		search.value = '';
 		// 	}, 100);
 		// });
-		search.addEventListener('keyup', function () {
-			Util.addClass(_wrapper, 'j_stat_search');
+		$search.on('keyup', function () {
+			_$wrapper.addClass('j_stat_search');
 			_search(this.value);
 		});
 	};
@@ -236,7 +158,7 @@ Demo = (function () {
 
 	loaded = false;
 	showCode = function (target, _text) {
-		if (!Util.data(target, 'showed')) {
+		if (!$(target).data('showed')) {
 			new QRCode(target, {
 				text: _text,
 				width: 128,
@@ -245,30 +167,30 @@ Demo = (function () {
 				colorLight : "#ffffff",
 				correctLevel : QRCode.CorrectLevel.H
 			});
-			Util.data(target, 'showed', true);
+			$(target).data('showed', true);
 		}
-		Util.addClass(target, 'post_content_dbtn_qrcode');
+		$(target).addClass('post_content_dbtn_qrcode');
 	};
 	hideCode = function (target) {
-		Util.removeClass(target, 'post_content_dbtn_qrcode');
+		$(target).removeClass('post_content_dbtn_qrcode');
 	};
 	init = function () {
-		document.body.addEventListener('mouseover', function (evt) {
-			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
+		$(document.body).on('mouseover', function (evt) {
+			if ($(evt.target).hasClass('post_content_dbtn')) {
 				if (!loaded) {
 					loaded = true;
 					Util.appendScript('/haloDoc/js/qrcode.js', function () {
-						showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+						showCode($('div', evt.target)[0], $(evt.target).data('url'));
 					});
 				}
 				else {
-					showCode(evt.target.getElementsByTagName('div')[0], Util.data(evt.target, 'url'));
+					showCode($('div', evt.target)[0], $(evt.target).data('url'));
 				}
 			}
 		});
 		document.body.addEventListener('mouseout', function (evt) {
-			if (Util.hasClass(evt.target, 'post_content_dbtn')) {
-				hideCode(evt.target.getElementsByTagName('div')[0]);
+			if ($(evt.target).hasClass('post_content_dbtn')) {
+				hideCode($('div', evt.target)[0]);
 			}
 		});
 	};
@@ -279,7 +201,6 @@ Demo = (function () {
 
 init = function () {
 	CodePrettify.init();
-	// Category.init();
 	Demo.init();
 	Search.init();
 };

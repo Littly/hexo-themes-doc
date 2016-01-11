@@ -1,4 +1,4 @@
-var PIXI = require('./pixi.js');
+// var PIXI = require('./pixi.js');
 var IDX = (function () {
 	var renderer,
 		ctn,
@@ -141,9 +141,9 @@ var IDX = (function () {
 	};
 
 	return {
-		init: init,
-		start: start,
-		stop: stop
+		init: function () {} || init,
+		start: function () {} || start,
+		stop: function () {} || stop
 	}
 })();
 
