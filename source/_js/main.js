@@ -1,5 +1,5 @@
 /*特有代码*/
-if (hexo.path.startsWith('api')) {
+if (/^api/.test(hexo.path)) {
 	var API = require('./modules/api.js');
 	API.init();
 }

@@ -90,7 +90,7 @@ Search = (function () {
 		} catch (e) {
 			_render([]);
 		}
-
+		
 	};
 
 	_render = function (map, reg) {
@@ -133,7 +133,7 @@ Search = (function () {
 		// 		search.value = '';
 		// 	}, 100);
 		// });
-		$search.on('keyup', function () {
+		$search.on('keyup', function (evt) {
 			_$wrapper.addClass('j_stat_search');
 			_search(this.value);
 		});
@@ -182,13 +182,16 @@ Demo = (function () {
 					Util.appendScript('/haloDoc/js/qrcode.js', function () {
 						showCode($('div', evt.target)[0], $(evt.target).data('url'));
 					});
+					if ('QRCode' in window) {
+						showCode($('div', evt.target)[0], $(evt.target).data('url'));
+					}
 				}
 				else {
 					showCode($('div', evt.target)[0], $(evt.target).data('url'));
 				}
 			}
 		});
-		document.body.addEventListener('mouseout', function (evt) {
+		$(document.body).on('mouseout', function (evt) {
 			if ($(evt.target).hasClass('post_content_dbtn')) {
 				hideCode($('div', evt.target)[0]);
 			}
