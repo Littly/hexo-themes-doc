@@ -35,6 +35,10 @@ h6 {
 	margin: 0;
 }
 
+section, nav, header, footer, aside {
+	display: block;
+}
+
 .fix {
 	zoom: 1;
 }
@@ -397,6 +401,31 @@ h6 {
 	padding: 30px 40px 10px;
 }
 
+.idx_info {
+	background: #45afaf;
+	text-align: center;
+	color: #fff;
+	padding: 40px 0 50px;
+}
+
+.idx_info_hd {
+	font-size: 20px;
+}
+
+.idx_info_qrcode img{
+	height: 200px;
+}
+.idx_info_desc {
+	font-size: 16px;
+}
+.idx_info_wechat {
+	font-size: 12px;
+}
+.idx_info_wechat img {
+	width: 20px;
+	height: 20px;
+	vertical-align: -6px;
+}
 
 /*footer*/
 

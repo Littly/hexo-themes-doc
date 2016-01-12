@@ -1,4 +1,4 @@
-<% if (is('demo')) { %>
+<% if (is('demo')||is('src')) { %>
 	<%- page.content %>
 <% } else { %>
 <html>
@@ -61,7 +61,7 @@
 			}
 			return result;
 		};
-		['aside', 'header', 'footer', 'nav'].forEach(function (val) {
+		['aside', 'header', 'footer', 'nav', 'section'].forEach(function (val) {
 			document.createElement(val);
 		});
 		String.prototype.trim = String.prototype.trim || function () {
@@ -90,6 +90,5 @@
 </body>
 
 </html>
-
 
 <% } %>
