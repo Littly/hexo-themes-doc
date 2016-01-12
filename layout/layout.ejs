@@ -1,4 +1,4 @@
-<% if (is_demo()) { %>
+<% if (is('demo')) { %>
 	<%- page.content %>
 <% } else { %>
 <html>
@@ -9,10 +9,12 @@
 	<title>
 		<%
 			var title;
-			if (is_post()) {
-				title = 'API - ' + page.title;
-			} else if (is_index()) {
-				title = 'HALOJS';
+			if (is('api')) {
+				title = '文档 | ' + page.title;
+			} else if (is('index.html')) {
+				title = '首页 | HALOJS';
+			} else if (is('download')) {
+				title = '下载 | HALOJS';
 			}
 		%>
 		<%- title %>

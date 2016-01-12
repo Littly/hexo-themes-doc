@@ -2,12 +2,11 @@
 <div id='j_post' class="post">
 	<h1 id="<%- post.title %>" class="post_title">
 		<%- post.title %>
-		<a href='https://github.com/<%- config.author %>/haloDoc/edit/master/source/<%- post.source %>' class='post_title_edit' target="_blank">Edit</a>
 	</h1>
 	<div class="post_content">
 		<%- post.content %>
 	</div>
-	
+
 	<div class="post_comment">
 		<% switch (theme.Comment) { case 'Changyan': %>
 				<div id="SOHUCS"></div>
@@ -31,7 +30,7 @@
 									'https:' :
 									'http:') + '//static.duoshuo.com/embed.js';
 						ds.charset = 'UTF-8';
-						(document.getElementsByTagName('head')[0] 
+						(document.getElementsByTagName('head')[0]
 						 || document.getElementsByTagName('body')[0]).appendChild(ds);
 					})();
 				</script>

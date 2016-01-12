@@ -1,18 +1,18 @@
 <!--S 头部-->
 <header class="header">
 	<h2 class="header_logo">
-		<a href="./" alt="JDC" title="JDC">HALO.JS</a>
+		<a href="<%- config.root %>" alt="JDC" title="JDC">HALO.JS</a>
 	</h2>
 	<nav>
 		<ul>
-			<li>
-				<%- link_to("api/", "API", {
-					external: true
+			<li class='<%- is("api") ? "current" : '' %>'>
+				<%- link_to("api/", "文档", {
+					<!-- external: true -->
 				})%>
 			</li>
-			<li>
-				<%- link_to("assets/download.zip", "DOWNLOAD", {
-					external: true
+			<li class='<%- is("download") ? "current" : '' %>'>
+				<%- link_to("download/", "下载", {
+					<!-- external: true -->
 				})%>
 			</li>
 			<li>
@@ -20,9 +20,11 @@
 					external: true
 				})%>
 			</li>
-			<!-- <li>
-				<%- link_to("/about", "ABOUT")%>
-			</li> -->
+			<li>
+				<%- link_to("http://aotu.io/about/", "关于AOTU", {
+					external: true
+				})%>
+			</li>
 		</ul>
 	</nav>
 </header>
